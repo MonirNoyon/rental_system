@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rental_system/home/sign_in.dart';
+import 'package:rental_system/home/sign_up.dart';
 import 'package:rental_system/home/splash_page.dart';
+import 'package:rental_system/screen/dashboard/dashboard.dart';
 
 void main() {
   runApp(HomePage());
@@ -13,7 +16,9 @@ class HomePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashPage(),
       routes: {
-
+        '/sign_in':(_) => Signin(),
+        '/sign_up':(_) => Signup(),
+        '/dashboard':(_) => Dashboard(),
       },
     );
   }
