@@ -122,7 +122,7 @@ class _SigninState extends State<Signin> {
                                   customBorder:const StadiumBorder(),
                                   splashColor: Colors.white54,
                                   onTap: () {
-                                    Navigator.of(context).pushNamed("/dashboard");
+                                    Navigator.of(context).pushNamed("/dashboard_home");
                                   },
                                   child: SizedBox(
                                     height: 50,

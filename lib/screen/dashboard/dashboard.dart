@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:rental_system/screen/dashboard/item.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class _DashboardState extends State<Dashboard> {
   late int _choiceIndex;
   int selectedPage = 0;
   dynamic choose = "Buy";
+
 
   @override
   void initState() {
@@ -52,115 +54,94 @@ class _DashboardState extends State<Dashboard> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedPage,
-        onTap: (int index) {
-          setState(() {
-            selectedPage = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.black54,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Chat'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_outline), label: 'Favourite'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-        ],
-        selectedItemColor: Color.fromRGBO(86, 60, 221, 100),
-        unselectedItemColor: Colors.black54,
-        showUnselectedLabels: true,
-        unselectedLabelStyle: TextStyle(
-          color: Colors.black54
-        ),
-      ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                width: size.width * 0.75,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      hintText: "Search here",
-                      hintStyle: TextStyle(color: Colors.white)),
-                ),
-              ),
-              Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius: BorderRadius.circular(10)),
-                child: InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                        )),
-                        builder: (BuildContext context) {
-                          return buildSheet();
-                        });
-                  },
-                  child: Icon(
-                    Icons.filter_list,
-                    color: Colors.white,
-                    size: 25,
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: size.width * 0.75,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.black26,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        hintText: "Search here",
+                        hintStyle: TextStyle(color: Colors.white)),
                   ),
                 ),
-              )
-            ],
-          ),
-          Container(
-            height: size.height * 0.1,
-            child: ListView.builder(
-              itemCount: _choices.length,
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemExtent: 150,
-              padding: EdgeInsets.all(10),
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  padding: EdgeInsets.all(10),
-                  child: ChoiceChip(
-                    label: Container(
-                        height: 40,
-                        child: Center(child: Text(_choices[index]))),
-                    selected: _choiceIndex == index,
-                    selectedColor: Color.fromRGBO(86, 60, 221, 97),
-                    backgroundColor: Colors.black26,
-                    shape: StadiumBorder(side: BorderSide()),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _choiceIndex = selected ? index : 0;
-                      });
+                Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.black26,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          )),
+                          builder: (BuildContext context) {
+                            return buildSheet();
+                          });
                     },
-                    labelStyle: TextStyle(color: Colors.white),
+                    child: Icon(
+                      Icons.filter_list,
+                      color: Colors.white,
+                      size: 25,
+                    ),
                   ),
-                );
-              },
+                )
+              ],
             ),
-          ),
-        ],
+            Container(
+              height: size.height * 0.1,
+              child: ListView.builder(
+                itemCount: _choices.length,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemExtent: 150,
+                padding: EdgeInsets.all(10),
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    child: ChoiceChip(
+                      label: Container(
+                          height: 40,
+                          child: Center(child: Text(_choices[index]))),
+                      selected: _choiceIndex == index,
+                      selectedColor: Color.fromRGBO(86, 60, 221, 97),
+                      backgroundColor: Colors.black26,
+                      shape: StadiumBorder(side: BorderSide()),
+                      onSelected: (bool selected) {
+                        setState(() {
+                          _choiceIndex = selected ? index : 0;
+                        });
+                      },
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Item(),
+            Item(),
+            Item(),
+          ],
+        ),
       ),
     );
   }
